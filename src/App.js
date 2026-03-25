@@ -351,14 +351,50 @@ export default function TTHealth() {
             <p style={{ fontSize: 16, color: "rgba(29,53,87,0.5)", maxWidth: 500, margin: "0 auto" }}>{t.contact.subtitle}</p>
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 280px", gap: 40 }}>
-            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
-                <input placeholder={t.contact.form.name} style={{ padding: "16px 20px", borderRadius: 12, border: "1px solid rgba(29,53,87,0.1)", background: "#fff", fontSize: 14, outline: "none", color: "#1D3557", fontFamily: "'DM Sans', sans-serif" }} />
-                <input placeholder={t.contact.form.email} style={{ padding: "16px 20px", borderRadius: 12, border: "1px solid rgba(29,53,87,0.1)", background: "#fff", fontSize: 14, outline: "none", color: "#1D3557", fontFamily: "'DM Sans', sans-serif" }} />
-              </div>
-              <input placeholder={t.contact.form.company} style={{ padding: "16px 20px", borderRadius: 12, border: "1px solid rgba(29,53,87,0.1)", background: "#fff", fontSize: 14, outline: "none", color: "#1D3557", fontFamily: "'DM Sans', sans-serif" }} />
-              <textarea placeholder={t.contact.form.message} rows={5} style={{ padding: "16px 20px", borderRadius: 12, border: "1px solid rgba(29,53,87,0.1)", background: "#fff", fontSize: 14, outline: "none", color: "#1D3557", fontFamily: "'DM Sans', sans-serif", resize: "vertical" }} />
-              <button style={{ padding: "16px 36px", borderRadius: 12, background: "linear-gradient(135deg, #2A9D8F, #264653)", color: "#fff", fontSize: 15, fontWeight: 700, border: "none", cursor: "pointer", letterSpacing: "0.02em", alignSelf: "flex-start", boxShadow: "0 8px 30px rgba(42,157,143,0.2)" }}>{t.contact.form.send}</button>
+            <form
+  action="https://formspree.io/f/mqegzrnr"
+  method="POST"
+  style={{ display: "flex", flexDirection: "column", gap: 16 }}
+>
+             <form
+  action="https://formspree.io/f/mqegzrnr"
+  method="POST"
+  style={{ display: "flex", flexDirection: "column", gap: 16 }}
+>
+  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+    <input
+      name="name"
+      placeholder={t.contact.form.name}
+      style={{ padding: "16px 20px", borderRadius: 12, border: "1px solid rgba(29,53,87,0.1)" }}
+    />
+    <input
+      type="email"
+      name="email"
+      placeholder={t.contact.form.email}
+      style={{ padding: "16px 20px", borderRadius: 12, border: "1px solid rgba(29,53,87,0.1)" }}
+    />
+  </div>
+
+  <input
+    name="company"
+    placeholder={t.contact.form.company}
+    style={{ padding: "16px 20px", borderRadius: 12, border: "1px solid rgba(29,53,87,0.1)" }}
+  />
+
+  <textarea
+    name="message"
+    placeholder={t.contact.form.message}
+    rows={5}
+    style={{ padding: "16px 20px", borderRadius: 12, border: "1px solid rgba(29,53,87,0.1)" }}
+  />
+
+  <button
+    type="submit"
+    style={{ padding: "16px 36px", borderRadius: 12, background: "linear-gradient(135deg, #2A9D8F, #264653)", color: "#fff", fontWeight: 700 }}
+  >
+    {t.contact.form.send}
+  </button>
+</form>
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 24, paddingTop: 8 }}>
               {t.contact.info.map((info, i) => (
