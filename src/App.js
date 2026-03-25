@@ -345,65 +345,60 @@ export default function TTHealth() {
       {/* CONTACT */}
       <Section id="contact">
         <Container narrow>
-          <div style={{ textAlign: "center", marginBottom: 48 }}>
-            <SectionTag text={t.contact.tag} />
-            <SectionTitle text={t.contact.title} />
-            <p style={{ fontSize: 16, color: "rgba(29,53,87,0.5)", maxWidth: 500, margin: "0 auto" }}>{t.contact.subtitle}</p>
-          </div>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 280px", gap: 40 }}>
-            <form
-  action="https://formspree.io/f/mqegzrnr"
-  method="POST"
-  style={{ display: "flex", flexDirection: "column", gap: 16 }}
->
-          
->
-  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
-    <input
-      name="name"
-      placeholder={t.contact.form.name}
-      style={{ padding: "16px 20px", borderRadius: 12, border: "1px solid rgba(29,53,87,0.1)" }}
-    />
-    <input
-      type="email"
-      name="email"
-      placeholder={t.contact.form.email}
-      style={{ padding: "16px 20px", borderRadius: 12, border: "1px solid rgba(29,53,87,0.1)" }}
-    />
-  </div>
-
-  <input
-    name="company"
-    placeholder={t.contact.form.company}
-    style={{ padding: "16px 20px", borderRadius: 12, border: "1px solid rgba(29,53,87,0.1)" }}
-  />
-
-  <textarea
-    name="message"
-    placeholder={t.contact.form.message}
-    rows={5}
-    style={{ padding: "16px 20px", borderRadius: 12, border: "1px solid rgba(29,53,87,0.1)" }}
-  />
-
-  <button
-    type="submit"
-    style={{ padding: "16px 36px", borderRadius: 12, background: "linear-gradient(135deg, #2A9D8F, #264653)", color: "#fff", fontWeight: 700 }}
+  <form
+    action="https://formspree.io/f/mqegzrnr"
+    method="POST"
+    style={{ display: "flex", flexDirection: "column", gap: 16 }}
   >
-    {t.contact.form.send}
-  </button>
-</form>
-            </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 24, paddingTop: 8 }}>
-              {t.contact.info.map((info, i) => (
-                <div key={i}>
-                  <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 3, textTransform: "uppercase", color: "rgba(29,53,87,0.25)", marginBottom: 6 }}>{info.label}</div>
-                  <div style={{ fontSize: 15, fontWeight: 500, color: "#1D3557" }}>{info.value}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </Container>
-      </Section>
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+      <input
+        name="name"
+        placeholder={t.contact.form.name}
+        style={{ padding: "16px 20px", borderRadius: 12, border: "1px solid rgba(29,53,87,0.1)" }}
+      />
+      <input
+        type="email"
+        name="email"
+        placeholder={t.contact.form.email}
+        style={{ padding: "16px 20px", borderRadius: 12, border: "1px solid rgba(29,53,87,0.1)" }}
+      />
+    </div>
+
+    <input
+      name="company"
+      placeholder={t.contact.form.company}
+      style={{ padding: "16px 20px", borderRadius: 12, border: "1px solid rgba(29,53,87,0.1)" }}
+    />
+
+    <textarea
+      name="message"
+      placeholder={t.contact.form.message}
+      rows={5}
+      style={{ padding: "16px 20px", borderRadius: 12, border: "1px solid rgba(29,53,87,0.1)" }}
+    />
+
+    <button
+      type="submit"
+      style={{ padding: "16px 36px", borderRadius: 12, background: "linear-gradient(135deg, #2A9D8F, #264653)", color: "#fff", fontWeight: 700 }}
+    >
+      {t.contact.form.send}
+    </button>
+  </form>
+
+  <div style={{ display: "flex", flexDirection: "column", gap: 24, paddingTop: 8 }}>
+    {t.contact.info.map((info, i) => (
+      <div key={i}>
+        <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 3, textTransform: "uppercase", color: "rgba(29,53,87,0.25)", marginBottom: 6 }}>
+          {info.label}
+        </div>
+        <div style={{ fontSize: 15, fontWeight: 500, color: "#1D3557" }}>
+          {info.value}
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
 
       {/* FOOTER */}
       <footer style={{ background: "#264653", padding: "48px 0 36px", textAlign: "center" }}>
