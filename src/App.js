@@ -53,7 +53,7 @@ const L = {
       tag: "GET IN TOUCH",
       title: "Start a Conversation",
       subtitle: "Whether you're hiring or exploring your next career move, we'd love to hear from you.",
-      form: { name: "Your Name", email: "Email Address", company: "Company (optional)", message: "Tell us about your needs...", send: "Send Message" },
+      form: { name: "Your Name", email: "Email Address", company: "Company (optional)", message: "Tell us about your needs...", send: "Send Message", success: "Message Sent!", successSub: "We'll get back to you within 24 hours." },
       info: [
         { label: "Email", value: "hello@tthealth.tech" },
         { label: "Based In", value: "Shanghai · Tokyo · Global" },
@@ -113,7 +113,7 @@ const L = {
       tag: "联系我们",
       title: "开始对话",
       subtitle: "无论您是在招聘还是在探索下一个职业机会，我们都期待与您交流。",
-      form: { name: "您的姓名", email: "邮箱地址", company: "公司（选填）", message: "请告诉我们您的需求...", send: "发送消息" },
+      form: { name: "您的姓名", email: "邮箱地址", company: "公司（选填）", message: "请告诉我们您的需求...", send: "发送消息", success: "消息已发送！", successSub: "我们会在24小时内回复您。" },
       info: [
         { label: "邮箱", value: "hello@tthealth.tech" },
         { label: "办公地点", value: "上海 · 东京 · 全球" },
@@ -173,7 +173,7 @@ const L = {
       tag: "お問い合わせ",
       title: "まずはご相談ください",
       subtitle: "採用をお考えの企業様も、キャリアをお考えの方も、お気軽にご連絡ください。",
-      form: { name: "お名前", email: "メールアドレス", company: "会社名（任意）", message: "ご要望をお聞かせください...", send: "送信する" },
+      form: { name: "お名前", email: "メールアドレス", company: "会社名（任意）", message: "ご要望をお聞かせください...", send: "送信する", success: "送信完了！", successSub: "24時間以内にご連絡いたします。" },
       info: [
         { label: "メール", value: "hello@tthealth.tech" },
         { label: "拠点", value: "上海 · 東京 · グローバル" },
@@ -209,7 +209,26 @@ export default function TTHealth() {
   const [lang, setLang] = useState("en");
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [formData, setFormData] = useState({ name: "", email: "", company: "", message: "" });
+  const [formSending, setFormSending] = useState(false);
+  const [formSent, setFormSent] = useState(false);
   const t = L[lang];
+
+  const handleForm = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+
+  const submitForm = async () => {
+    if (!formData.name || !formData.email || !formData.message) return;
+    setFormSending(true);
+    try {
+      await fetch("https://formspree.io/f/mqegzrnr", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      setFormSent(true);
+    } catch (e) { console.error(e); }
+    setFormSending(false);
+  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -360,15 +379,25 @@ export default function TTHealth() {
             <p style={{ fontSize: 16, color: "rgba(29,53,87,0.5)", maxWidth: 500, margin: "0 auto" }}>{t.contact.subtitle}</p>
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 280px", gap: 40 }}>
+            {!formSent ? (
             <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
-                <input placeholder={t.contact.form.name} style={{ padding: "16px 20px", borderRadius: 12, border: "1px solid rgba(29,53,87,0.1)", background: "#fff", fontSize: 14, outline: "none", color: "#1D3557", fontFamily: "'DM Sans', sans-serif" }} />
-                <input placeholder={t.contact.form.email} style={{ padding: "16px 20px", borderRadius: 12, border: "1px solid rgba(29,53,87,0.1)", background: "#fff", fontSize: 14, outline: "none", color: "#1D3557", fontFamily: "'DM Sans', sans-serif" }} />
+                <input name="name" placeholder={t.contact.form.name} value={formData.name} onChange={handleForm} style={{ padding: "16px 20px", borderRadius: 12, border: "1px solid rgba(29,53,87,0.1)", background: "#fff", fontSize: 14, outline: "none", color: "#1D3557", fontFamily: "'DM Sans', sans-serif" }} />
+                <input name="email" type="email" placeholder={t.contact.form.email} value={formData.email} onChange={handleForm} style={{ padding: "16px 20px", borderRadius: 12, border: "1px solid rgba(29,53,87,0.1)", background: "#fff", fontSize: 14, outline: "none", color: "#1D3557", fontFamily: "'DM Sans', sans-serif" }} />
               </div>
-              <input placeholder={t.contact.form.company} style={{ padding: "16px 20px", borderRadius: 12, border: "1px solid rgba(29,53,87,0.1)", background: "#fff", fontSize: 14, outline: "none", color: "#1D3557", fontFamily: "'DM Sans', sans-serif" }} />
-              <textarea placeholder={t.contact.form.message} rows={5} style={{ padding: "16px 20px", borderRadius: 12, border: "1px solid rgba(29,53,87,0.1)", background: "#fff", fontSize: 14, outline: "none", color: "#1D3557", fontFamily: "'DM Sans', sans-serif", resize: "vertical" }} />
-              <button style={{ padding: "16px 36px", borderRadius: 12, background: "linear-gradient(135deg, #2A9D8F, #264653)", color: "#fff", fontSize: 15, fontWeight: 700, border: "none", cursor: "pointer", letterSpacing: "0.02em", alignSelf: "flex-start", boxShadow: "0 8px 30px rgba(42,157,143,0.2)" }}>{t.contact.form.send}</button>
+              <input name="company" placeholder={t.contact.form.company} value={formData.company} onChange={handleForm} style={{ padding: "16px 20px", borderRadius: 12, border: "1px solid rgba(29,53,87,0.1)", background: "#fff", fontSize: 14, outline: "none", color: "#1D3557", fontFamily: "'DM Sans', sans-serif" }} />
+              <textarea name="message" placeholder={t.contact.form.message} value={formData.message} onChange={handleForm} rows={5} style={{ padding: "16px 20px", borderRadius: 12, border: "1px solid rgba(29,53,87,0.1)", background: "#fff", fontSize: 14, outline: "none", color: "#1D3557", fontFamily: "'DM Sans', sans-serif", resize: "vertical" }} />
+              <button onClick={submitForm} disabled={formSending} style={{ padding: "16px 36px", borderRadius: 12, background: formSending ? "rgba(42,157,143,0.5)" : "linear-gradient(135deg, #2A9D8F, #264653)", color: "#fff", fontSize: 15, fontWeight: 700, border: "none", cursor: formSending ? "wait" : "pointer", letterSpacing: "0.02em", alignSelf: "flex-start", boxShadow: "0 8px 30px rgba(42,157,143,0.2)" }}>{formSending ? "..." : t.contact.form.send}</button>
             </div>
+            ) : (
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", padding: "60px 20px", background: "rgba(42,157,143,0.04)", borderRadius: 16, border: "1px solid rgba(42,157,143,0.15)" }}>
+              <div style={{ textAlign: "center" }}>
+                <div style={{ fontSize: 48, marginBottom: 16 }}>✅</div>
+                <div style={{ fontSize: 20, fontWeight: 700, color: "#2A9D8F", fontFamily: "'Outfit', sans-serif", marginBottom: 8 }}>{t.contact.form.success}</div>
+                <div style={{ fontSize: 14, color: "rgba(29,53,87,0.5)" }}>{t.contact.form.successSub}</div>
+              </div>
+            </div>
+            )}
             <div style={{ display: "flex", flexDirection: "column", gap: 24, paddingTop: 8 }}>
               {t.contact.info.map((info, i) => (
                 <div key={i}>
